@@ -63,7 +63,9 @@ bezkoder.app.jwtExpirationMs= 86400000
 ```
 ## Run Spring Boot application
 ```
-mvn spring-boot:run
+mvn clean install -DskipTests
+
+docker-compose up
 ```
 
 ## Run following SQL insert statements
