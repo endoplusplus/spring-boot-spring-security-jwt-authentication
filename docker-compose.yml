@@ -1,0 +1,37 @@
+version: '3.4'
+
+services:
+  springbootspringsecurityjwtauthentication:
+    image: springbootspringsecurityjwtauthentication:latest
+    build: .
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+    networks: 
+      - backend
+  db:
+    image: postgres:13.0
+    restart: always
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=123
+      - POSTGRES_USER=postgres
+    volumes:
+      - odoo-web-data:/var/lib/odoo
+      - ./config:/etc/odoo
+      - ./init-user-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh
+    networks: 
+      - backend
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8069:8080
+    networks: 
+      - backend
+volumes:
+  odoo-web-data:
+networks: 
+  backend:
